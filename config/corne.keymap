@@ -7,50 +7,258 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/mouse.h>
+
+#define DEFAULT 0
+#define NUMBER 1
+#define NAVIGATION 2
+#define FUNCTION 3
+#define GAME 4
 
 / {
-        keymap {
-                compatible = "zmk,keymap";
+    chosen { zmk,matrix_transform = &five_column_transform; };
 
-                default_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
-// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-// | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-//                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
-                        bindings = <
-   &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-   &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                  &kp LGUI &mo 1 &kp SPACE   &kp RET &mo 2 &kp RALT
-                        >;
-                };
-                lower_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
-// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-// | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp TAB    &kp N1       &kp N2       &kp N3       &kp N4       &kp N5         &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-   &kp LSHFT  &trans       &trans       &trans       &trans       &trans         &trans   &trans   &trans &trans    &trans &trans
-                                    &kp LGUI     &trans       &kp SPACE      &kp RET  &trans   &kp RALT
-                        >;
-                };
+    keymap {
+        compatible = "zmk,keymap";
 
-                raise_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
-// | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-// | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-   &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
-   &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
-                             &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
-                        >;
-                };
+        default {
+            bindings = <
+                &mt ESC Q       &kp W           &kp E           &kp R           &kp T           &kp Y           &kp U           &kp I           &kp O           &kp P
+                &kp A           &hm LCTRL S     &hm LALT D      &hm LSHFT F     &kp G           &kp H           &hm RSHFT J     &hm RALT K      &hm RCTRL L     &nalt_tild
+                &kp Z           &kp X           &kp C           &kp V           &kp B           &kp N           &kp M           &kp COMMA       &kp DOT         &slash_bck 
+                                                &mt LGUI TAB    &mo NAVIGATION  &kp BSPC        &kp SPACE       &mo NUMBER      &mt RGUI ENTER
+            >;
         };
+
+        numbers {
+            bindings = <
+                &kp GRAVE       &at_grave       &hashtack       &kp RA(APOS)    &kp RA(BSLH)    &kp KP_ASTERISK &kp N7          &kp N8          &kp N9          &kp SLASH
+                &kp DOLLAR      &aper_neg       &excls          &hm LSHFT LS(N8)&kp LS(N9)      &kp KP_SLASH    &hm RSHFT N4    &kp N5          &kp N6          &plus_pow
+                &kp PRCNT       &single_double  &interogs       &brack_less     &brack_grtr     &kp N0          &kp N1          &kp N2          &kp N3          &ecual_virg 
+                                                &kp SPACE       &mo FUNCTION    &kp BSPC        &none           &mo NUMBER      &none
+            >;
+        };
+
+        navigation {
+            bindings = <
+                &mkp MB5        &bt BT_NXT      &kp C_VOL_UP    &kp C_BRI_UP    &kp C_NEXT      &kp DEL         &kp K_COPY      &kp K_PASTE     &kp K_CUT       &kp K_UNDO
+                &mkp MB4        &bt BT_PRV      &kp C_VOL_DN    &kp C_BRI_DN    &kp C_PREV      &kp LEFT        &kp DOWN        &kp UP          &kp RIGHT       &kp ESC
+                &kp K_LOCK      &bt BT_CLR      &kp C_MUTE      &kp C_BRI_AUTO  &kp C_PP        &kp PG_UP       &kp PG_DN       &kp HOME        &kp END         &kp K_REDO 
+                                                &none           &mo NAVIGATION  &none           &kp RSHFT       &mo FUNCTION    &kp ENTER
+            >;
+        };
+
+        function {
+            bindings = <
+                &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp CAPS        &none           &none           &none           &to GAME
+                &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4
+                &none           &none           &none           &kp F11         &kp F12         &sys_reset      &bootloader     &kp PSCRN       &kp PAUSE_BREAK &bt BT_CLR  
+                                                &none           &mo FUNCTION    &none           &none           &mo FUNCTION    &none
+            >;
+        };
+
+        game {
+            bindings = <
+                &kp TAB         &kp Q           &kp W           &kp E           &kp R           &none           &none           &none           &none           &none
+                &kp LSHFT       &kp A           &kp S           &kp D           &kp F           &none           &none           &none           &none           &none
+                &kp LCTRL       &kp Z           &kp X           &kp C           &kp V           &none           &none           &none           &none           &none  
+                                                &kp ESC         &kp M           &kp SPACE       &to DEFAULT     &none           &none
+            >;
+        };
+    };
+
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+        esc_0: esc_0 {
+            compatible = "zmk,behavior-macro";
+            label = "ESC_0";
+            #binding-cells = <0>;
+            bindings = <&to 0 &kp ESCAPE>;
+        };
+
+        // default
+
+        slash_bck: slash_bck {
+            compatible = "zmk,behavior-mod-morph";
+            label = "SLASH_BCK";
+            bindings = <&slash_pip>, <&kp RA(N1)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT|MOD_RALT)>;
+            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        slash_pip: slash_pip {
+            compatible = "zmk,behavior-mod-morph";
+            label = "SLASH_PIP";
+            bindings = <&kp LS(N7)>, <&kp RA(GRAVE)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        nalt_tild: nalt_tild {
+            compatible = "zmk,behavior-mod-morph";
+            label = "NALT_TILD";
+            bindings = <&kp SEMI>, <&kp APOS>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT|MOD_RALT)>;
+            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // nums 
+
+        at_grave: at_grave {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AT_GRAVE";
+            bindings = <&kp RA(N2)>, <&kp LBKT>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        hashtack: hashtack {
+            compatible = "zmk,behavior-mod-morph";
+            label = "HASHTACK";
+            bindings = <&kp RA(N3)>, <&kp RA(N3)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        aper_neg: aper_neg {
+            compatible = "zmk,behavior-mod-morph";
+            label = "APER_NEG";
+            bindings = <&kp LS(N6)>, <&kp RA(N6)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        excls: excls {
+            compatible = "zmk,behavior-mod-morph";
+            label = "EXCLS";
+            bindings = <&hm LGUI EQUAL>, <&hm LGUI LS(N1)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        plus_pow: plus_pow {
+            compatible = "zmk,behavior-mod-morph";
+            label = "PLUS_POW";
+            bindings = <&kp KP_PLUS>, <&kp LS(LBKT)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        single_double: single_double {
+            compatible = "zmk,behavior-mod-morph";
+            label = "SINGLE_DOUBLE";
+            bindings = <&kp MINUS>, <&kp LS(N2)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        interogs: interogs {
+            compatible = "zmk,behavior-mod-morph";
+            label = "INTEROGS";
+            bindings = <&kp LS(EQUAL)>, <&kp LS(MINUS)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        brack_less: brack_less {
+            compatible = "zmk,behavior-mod-morph";
+            label = "BRACK_LESS";
+            bindings = <&kp RA(LBKT)>, <&kp NUBS>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        brack_grtr: brack_grtr {
+            compatible = "zmk,behavior-mod-morph";
+            label = "BRACK_GRTR";
+            bindings = <&kp RA(RBKT)>, <&kp LS(NUBS)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        ecual_virg: ecual_virg {
+            compatible = "zmk,behavior-mod-morph";
+            label = "ECUAL_VIRG";
+            bindings = <&kp LS(N0)>, <&kp RA(N4)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        RESET_R {
+            bindings = <&esc_0>;
+            key-positions = <3 4>;
+            layers = <DEFAULT NAVIGATION NUMBER FUNCTION>;
+        };
+
+        RESET_L {
+            bindings = <&esc_0>;
+            key-positions = <5 6>;
+            layers = <DEFAULT NAVIGATION NUMBER FUNCTION>;
+
+        };
+
+        toggle_shift {
+            bindings = <&caps_word>;
+            key-positions = <14 15>;
+            layers = <DEFAULT NAVIGATION NUMBER FUNCTION>;
+        };
+
+        FUN_LAYER {
+            bindings = <&mo FUNCTION>;
+            key-positions = <31 34>;
+            layers = <DEFAULT>;
+        };
+
+        NUM1 {
+            bindings = <&kp N1>;
+            key-positions = <21 30>;
+            layers = <GAME>;
+        };
+
+        NUM2 {
+            bindings = <&kp N2>;
+            key-positions = <22 30>;
+            layers = <GAME>;
+        };
+
+        NUM3 {
+            bindings = <&kp N3>;
+            key-positions = <23 30>;
+            layers = <GAME>;
+        };
+
+        NUM4 {
+            bindings = <&kp N4>;
+            key-positions = <24 30>;
+            layers = <GAME>;
+        };
+    };
 };
