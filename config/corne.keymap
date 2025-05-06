@@ -24,10 +24,10 @@
 
         default {
             bindings = <
-  &kp Q  &kp W  &kp E         &kp R           &kp T              &kp Y          &kp U       &kp I             &kp O      &kp P
-  &kp A  &kp S  &kp D         &kp F           &kp G              &kp H          &kp J       &kp K             &kp L      &nalt_tild
-  &kp Z  &kp X  &kp C         &kp V           &kp B              &kp N          &kp M       &kp MINUS         &kp COMMA  &kp DOT
-                &mt LGUI TAB  &mo NAVIGATION  &mt LCTRL SPACE    &kp BACKSPACE  &mo NUMBER  &mt LSHIFT ENTER
+  &kp Q  &kp W        &kp E           &kp R           &kp T        &kp Y          &kp U        &kp I            &kp O        &kp P
+  &kp A  &mt LCTRL S  &mt LEFT_ALT D  &mt LSHFT F     &kp G        &kp H          &mt RSHFT J  &mt RIGHT_ALT K  &mt RCTRL L  &nalt_tild
+  &kp Z  &kp X        &kp C           &kp V           &kp B        &kp N          &kp M        &kp COMMA        &kp DOT      &kp FSLH
+                      &mt LGUI TAB    &mo NAVIGATION  &kp SPACE    &kp BACKSPACE  &mo NUMBER   &mt RCMD ENTER
             >;
         };
 
